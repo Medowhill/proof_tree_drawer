@@ -1,19 +1,28 @@
 class Expr extends Obj {
   constructor() {
     super();
-    this.typ = 'expr';
+    this.type = 'expr';
   }
 }
 
 class Num extends Obj {
-  constructor(n, typ) {
+  constructor(n, type) {
     super();
     this.n = n;
-    this.typ = typ;
+    this.type = type;
   }
 
   objs() {
     return [String(this.n)];
+  }
+
+  copy() {
+    return new Num(this.n, this.type);
+  }
+
+  substitute(o, n) {
+    if (this === o) return n;
+    else return this.copy();
   }
 }
 
@@ -25,6 +34,15 @@ class Id extends Expr {
 
   objs() {
     return [this.x];
+  }
+
+  copy() {
+    return new Id(this.x);
+  }
+
+  substitute(o, n) {
+    if (this === o) return n;
+    else return this.copy();
   }
 }
 
@@ -62,6 +80,15 @@ class Fun extends Expr {
   objs() {
     return ['{fun {', this.p, '} ', this.b, '}'];
   }
+
+  copy() {
+    return new Fun(this.p, this.b.copy());
+  }
+
+  substitute(o, n) {
+    if (this === o) return n;
+    else return new Fun(this.p, this.b.substitute(o, n));
+  }
 }
 
 class App extends Expr {
@@ -79,7 +106,7 @@ class App extends Expr {
 class Val extends Obj {
   constructor() {
     super();
-    this.typ = 'val';
+    this.type = 'val';
   }
 }
 
@@ -93,5 +120,18 @@ class Closure extends Val {
 
   objs() {
     return ['⟨λ', this.p, '.', this.b, ', ', this.env, '⟩'];
+  }
+
+  copy() {
+    return new Closure(this.p, this.b.copy(), this.env.copy());
+  }
+
+  substitute(o, n) {
+    if (this === o) return n;
+    else return new Closure(
+      this.p,
+      this.b.substitute(o, n),
+      this.env.substitute(o, n)
+    );
   }
 }

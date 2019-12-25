@@ -1,7 +1,7 @@
 class Judgement extends Obj {
   constructor() {
     super();
-    this.typ = 'judgement';
+    this.type = 'judgement';
   }
 
   height() { return fontSize; }
@@ -29,5 +29,20 @@ class In extends Judgement {
 
   objs() {
     return [this.x, ' ∈ Domain(', this.env, ')'];
+  }
+
+  copy() {
+    return new In(
+      this.x,
+      this.env.copy()
+    );
+  }
+
+  substitute(o, n) {
+    if (this === o) return n;
+    else return new In(
+      this.x,
+      this.env.substitute(o, n)
+    );
   }
 }

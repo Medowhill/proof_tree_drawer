@@ -8,15 +8,99 @@
   <script src="./judgement.js" type="application/javascript"></script>
   <script src="./expr.js" type="application/javascript"></script>
   <script src="./env.js" type="application/javascript"></script>
-  <script src="./rule.js" type="application/javascript"></script>
   <style type="text/css">
     @font-face {
       font-family: "Computer Modern";
       src: url('./cmunrm.ttf');
     }
   </style>
- </head>
- <body>
-   <canvas id="canvas" width="1" height="1"></canvas>
- </body>
+  <link rel="stylesheet" href="./index.css">
+  </head>
+  <body>
+    <canvas id="canvas" width="1" height="1"></canvas>
+
+    <div id="expr-modal" class="w3-modal" style="display: none;">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span onclick="$('#expr-modal')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <button id="b-expr-num" onclick="newNum()">Num</button>
+          <button id="b-expr-id" onclick="newStr('id')">Id</button>
+          <button id="b-expr-add" onclick="updateSimple('add')">Add</button>
+          <button id="b-expr-sub" onclick="updateSimple('sub')">Sub</button>
+          <button id="b-expr-fun" onclick="newStr('fun')">Fun</button>
+          <button id="b-expr-app" onclick="updateSimple('app')">App</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="val-modal" class="w3-modal" style="display: none;">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span onclick="$('#val-modal')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <button id="b-val-num" onclick="newNum()">Num</button>
+          <button id="b-val-closure" onclick="newStr('closure')">Closure</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="env-modal" class="w3-modal" style="display: none;">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span onclick="$('#env-modal')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <button id="b-env-add" onclick="newStr('envA')">Add a variable</button>
+          <button id="b-env-remove" onclick="newStr('envR')">Remove a variable</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="judgement-modal" class="w3-modal" style="display: none;">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span onclick="$('#judgement-modal')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <button id="b-judgement-add" onclick="show('premise')">Add a premise</button>
+          <button id="b-judgement-remove" onclick="removePremise()">Remove this premise</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="premise-modal" class="w3-modal" style="display: none;">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span onclick="$('#premise-modal')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <button id="b-premise-eval" onclick="addEval()">Evaluation</button>
+          <button id="b-premise-in" onclick="newStr('in')">Domain</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="update-modal" class="w3-modal" style="display: none;">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span onclick="$('#update-modal')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <button id="b-update-change" onclick="changeObj()">Change</button>
+          <button id="b-update-remove" onclick="removeObj()">Remove</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="num-modal" class="w3-modal" style="display: none;">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span onclick="$('#num-modal')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <input id="i-num-num" type="text" placeholder="integer">
+          <button id="b-num-ok" onclick="updateNum()">Ok</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="str-modal" class="w3-modal" style="display: none;">
+      <div class="w3-modal-content">
+        <div class="w3-container">
+          <span onclick="$('#str-modal')[0].style.display='none'" class="w3-button w3-display-topright">&times;</span>
+          <input id="i-str-str" type="text" placeholder="string">
+          <button id="b-str-ok" onclick="updateStr()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
